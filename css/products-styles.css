@@ -1,0 +1,45 @@
+#filter-select{
+  background-color: #ffffff!important;
+  width: 7em;
+  
+}
+
+#product-list-container, #content-functions{
+  width: 80%;
+  margin: 0 10% 1% 10%;
+}
+
+#filter-buttons{
+  width: 60%;
+}
+#precio{
+  display: inline;
+  margin-right: 1em;
+}
+
+#filter-container{
+  width: 90%;
+  margin: 0 10% 0 10%;
+  align-items: flex-end;
+}
+
+#search-input{
+  margin-top: 8px;
+}
+
+#mas-barato{
+  margin-top: 8px;
+}
+
+#button-container{
+  width: 100%;
+  align-self: flex-end;
+  
+}
+#order-buttons{
+  padding: 0px;
+}
+
+#min-filter, #max-filter{
+  width: 9em;
+}

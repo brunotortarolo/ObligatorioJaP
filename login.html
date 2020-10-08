@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://getbootstrap.com/docs/4.3/examples/album/ -->
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <title>eMercado - Todo lo que busques está aquí</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <style>
+    html, body{
+      height: 100%;
+    }
+
+    body {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background-color: #edeeef;
+    }
+
+    #logo {
+      width: 100%;
+    }
+
+    h4 {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 26px;
+      color: #96969b;
+      align-items: center;
+      margin: 1%;
+      padding: 2%;
+    }
+    
+
+    .boxes{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      color: grey;
+      width: 12em;
+      height: 2em;
+      width: auto;
+      font-style: italic;      
+    }
+
+    #email{
+      padding: 10px 10px 0 10px;
+      margin-bottom: 1px;
+    }
+    #password{
+      padding: 0px 10px 10px 10px;
+      margin-bottom: 10px;
+    }
+    #button{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      border: 0;
+      border-radius: 10px;
+      color: #edeeef;
+      background-color: #d61c6c;
+      width: 12em;
+      height: 3em;
+    }
+  </style>
+</head>
+
+<body class="text-center">
+  <div class="container p-5">
+    <div>
+      <img id="logo" src="img/login2.png" alt="logotipo">
+    </div>
+    <div id="container-login" style="position: relative; width:auto; top: 0;">
+      <h4 class="login-title">Inicia sesión para acceder al sitio:</h4>     
+        
+        <form id="login-form" action="" method="GET">
+          <div id="email">
+            <input id="inputEmail"class="boxes" type="email" name="email" placeholder="Dirección de correo">
+          </div>
+          <div id="password">
+            <input id="inputPassword"class="boxes" type="password" name="password" placeholder="Contraseña">
+          </div>
+          <div id="checkbox-login">
+            <label>Conserva mi sesión:</label>
+            <input id="keep-login"type="checkbox" name="keep-login">
+          </div>
+          <div>
+            <input id="button" type="submit" value="Ingresar">
+          </div>
+        </form>
+    </div>
+  </div>
+
+  
+  <script src="js/init.js"></script>
+  <script src="js/login.js"></script>
+ 
+</body>
+</html>

@@ -1,0 +1,74 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.row-content {
+margin-bottom: 2px;
+padding: 5px 0 5px 0;
+border: 1px ridge;
+height: 180px;
+}
+
+.badge-pill{
+    background-color: lightseagreen;
+}
+
+h2{
+    font-size: 22px;
+}
+
+h3, h4{
+    font-size: 18px;
+}
+.cart-card{
+    align-items: center;
+    display: flex;
+}
+
+.qty-btn{
+    width: 3em;
+}
+
+.qty-btn-group{
+    width: 8em;
+    margin: 2px;
+}
+
+.ship-secs{
+    font-style: italic;
+    font-size: 12px;
+    font-weight: lighter;
+    color: darkcyan;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.final-purchase{
+    margin-bottom: 2px;
+    padding: 5px 1px 5px 5px;
+    border-top: 1px ridge;
+}
+#finalize-purchase{
+    height: 80px;
+}
+
+#change-currency {
+    height: fit-content;
+    width: fit-content;
+    background-color: darkcyan ;
+
+}
+
+#user-in-title{
+    text-transform: capitalize;
+}
+

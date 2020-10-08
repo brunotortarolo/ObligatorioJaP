@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <title>eMercado - Todo lo que busques está aquí</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    img {
+      width: 150px;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/cart.css">
+  <link href="css/dropzone.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="site-header sticky-top py-1 bg-dark">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+      <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
+      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
+      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
+      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
+      <div class="dropdown show py-2 d-none d-md-inline-block">
+        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+          <a class="dropdown-item" href="cart.html">Mi carrito</a>
+          <a class="dropdown-item" href="login.html" onclick="logOut()">Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="text-center p-4">
+    <h2 id="products-title">Mi Carrito</h2>
+    <p class="lead">Verás aquí todos los productos añadidos a tu carrito.</p>
+  </div>
+
+  <div class="container">
+    <div id="carrito-bienvenida" class="row">
+      <div class="col-12">
+        <h1 class="mt-0">¡<span id="user-in-title"></span>! Tienes <span id="total-items"></span> <span
+            id="article"></span> en tu
+          carrito!</h1>
+        <h2 class="mt-1">Puedes finalizar tu compra cuando lo desees.</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div id="productos-carrito" class="col-8">
+      </div>
+
+      <div class="col-4 final-purchase">
+        <div class="d-flex justify-content-around align-items-center" style="border-bottom: 2px ridge">
+          <h2 class="my-3"><strong>Sub-total: </strong><span id="subtotal-currency">UYU </span><span
+              id="subtotal-cost"></span></h2>
+          <button id="change-currency" type="button" class="btn btn-sm btn-secondary">USD</button>
+        </div>
+        <form method ="#" action="#">
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+
+              <label for="shipping-type" class="d-inline">Tipo de envío:</label>
+
+              <div class="align-items-center">
+                <p class="d-block my-0 ship-secs">(Standard (12 a 15 días) - Costo: 5%</p>
+                <p class="d-block my-0 ship-secs">Express (5-8 días) - Costo: 7%</p>
+                <p class="d-block my-0 ship-secs">Premium (2-5 días) - Costo: 15%)</p>
+              </div>
+
+              <div>
+                <label class="radio-inline shipping-type"><input onclick="showTotalCost()" id="standard-shipping"
+                    type="radio" name="shipping-type" checked value="0.05">
+                  <span class="badge badge-pill shipping-type">Standard</span></label>
+                <label class="radio-inline shipping-type"><input onclick="showTotalCost()" id="express-shipping"
+                    type="radio" name="shipping-type" value="0.07">
+                  <span class="badge badge-pill badge-lg">Express</span></label>
+                <label class="radio-inline shipping-type"><input onclick="showTotalCost()" id="premium-shipping"
+                    type="radio" name="shipping-type" value="0.15">
+                  <span class="badge badge-pill">Premium</span></label>
+              </div>
+              <div class="form-group d-flex justify-content-start my-1" style="border-bottom: 1px ridge">
+                <label for="firstname" class="">Dirección de entrega:
+                  <input id="shipping-add"type="text" class="form-control my-1" placeholder="Calle, número, esquina" required>
+                  <input id="shipping-city-country" type="text" class="form-control my-1" placeholder="Ciudad, País" required>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="form-group">
+              <div class="d-flex justify-content-start" style="border-bottom: 1px ridge">
+                <h3 class="mt-0">Costo de envío: <span id="shipping-currency">UYU </span><span
+                    id="shipping-cost"></span></h3>
+              </div>
+
+              <div class="d-flex justify-content-start my-2" style="border-bottom: 2px ridge">
+                <div class="form-group">
+                  <label for="payment-method" class="d-flex justify-content-start">Método de pago:</label>
+                  <div>
+                    <label class="radio-inline"><input type="radio" name="payment-method" checked value="t/credito">
+                      <span class="badge badge-pill">Tarjeta de Crédito</span></label>
+                    <label class="radio-inline"><input type="radio" name="payment-method" value="t/bancaria">
+                      <span class="badge badge-pill badge-lg">Transferencia Bancaria</span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-start" style="border-bottom: 2px ridge">
+                <h2 class="my-2"><strong>Total: </strong><span id="total-currency">UYU </span><span
+                    id="total-amount"></span></h2>
+              </div>
+              <div class="d-flex justify-content-center my-4">
+                <button id="finalize-purchase" type="submit" class="btn btn-primary col"
+                   data-target="#myModal">FINALIZAR COMPRA</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header d-flex justify-items-center">
+            <h4 id="success-message" class="modal-title align-content-center"></h4>
+            <button class="close" data-dismiss="modal">&times;</button>
+
+          </div>
+          <div class="modal-body">
+
+            <table  class="table">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio (unidad)</th>
+                </tr>
+              </thead>
+              <tbody id="modal-content-product">
+              </tbody>
+            </table>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Tipo de envío</th>
+                  <th scope="col">Dirección de envío</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"></th>
+                  <td id="modal-shipping-type"></td>
+                  <td id="modal-shipping-address"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Método de pago</th>
+                  <th scope="col">Sub-total</th>
+                  <th scope="col">Costo de envío</th>
+                  <th scope="col">Costo total </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"></th>
+                  <td id="modal-metodo-pago"></td>
+                  <td id="modal-sub-total"></td>
+                  <td id="modal-costo-envio"></td>
+                  <td id="modal-total"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" href="index.html">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="spinner-wrapper">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/dropzone.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+
+</html>
