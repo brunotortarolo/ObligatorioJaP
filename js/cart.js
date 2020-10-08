@@ -56,7 +56,6 @@ function takeFromCounter(i) {
 function removeItem(i) {
   cartContent.splice(i, 1);
   showCartContent(cartContent); 
-  isDollar = !isDollar;
   currencyConversion();
   showTotalCost();
 }
