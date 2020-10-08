@@ -23,7 +23,6 @@ function addToCounter(i) {
 
   subTotalToShow = isDollar ? finSubTotal / 40 : finSubTotal;
   document.getElementById("subtotal-cost").innerHTML = subTotalToShow.toFixed(2);
-
   showTotalCost();
 }
 
@@ -55,8 +54,11 @@ function takeFromCounter(i) {
 
 //REMOVER ITEM
 function removeItem(i) {
-  cartContent.splice(i, 1)
-  showCartContent(cartContent)
+  cartContent.splice(i, 1);
+  showCartContent(cartContent); 
+  isDollar = !isDollar;
+  currencyConversion();
+  showTotalCost();
 }
 
 
@@ -199,7 +201,7 @@ function showCartContent(array) {
                       <button class="btn btn-outline-secondary decremental" type="button" onclick="takeFromCounter(`+ i + `)">-</button>
                     </div>
                     <div class="qty-btn">
-                      <input oninput="finalizarCompra(`+ i + `)" type="number" min="1" class="form-control item-counter" value="` + cartItem.count + `">
+                      <input oninput="finalizarCompra(`+ i + `)" readonly="readonly" type="number" min= 0 class="form-control item-counter" value="` + cartItem.count + `">
                     </div>
                     <div class="input-group-append">
                       <button class="btn btn-outline-secondary" type="button" onclick="addToCounter(`+ i + `)">+</button>
@@ -224,8 +226,8 @@ function showCartContent(array) {
 
   }
 
-  
-  let kept = userID.substring( 0, userID.indexOf("@"));
+
+  let kept = userID.substring(0, userID.indexOf("@"));
   document.getElementById("user-in-title").innerHTML = kept;
 
   document.getElementById("productos-carrito").innerHTML = htmlContentToAppend;
@@ -233,10 +235,33 @@ function showCartContent(array) {
   document.getElementById("article").innerHTML = articles;
 
   document.getElementById("subtotal-cost").innerHTML = subTotalFinal.toFixed(2);
-  finSubTotal = Number(document.getElementById("subtotal-cost").innerText);
-  showTotalCost();
+  finSubTotal = Number(document.getElementById("subtotal-cost").innerText); 
+  
 }
 
+function currencyConversion(){
+ 
+  if (isDollar == true) {
+    document.getElementById("change-currency").innerHTML = "UYU ";
+    document.getElementById("subtotal-currency").innerHTML = "USD ";
+    document.getElementById("total-currency").innerHTML = "USD ";
+    document.getElementById("shipping-currency").innerHTML = "USD ";
+  } else {
+    document.getElementById("change-currency").innerHTML = "USD ";
+    document.getElementById("subtotal-currency").innerHTML = "UYU ";
+    document.getElementById("total-currency").innerHTML = "UYU ";
+    document.getElementById("shipping-currency").innerHTML = "UYU ";
+  }
+
+  let shippingCostToShow = isDollar ? shippingCost / 40 : shippingCost;
+  shippingCost = Number(document.getElementById("shipping-cost").innerText)
+
+  document.getElementById("shipping-cost").innerHTML = shippingCostToShow.toFixed(2);
+
+  let subTotalToShow = isDollar ? finSubTotal / 40 : finSubTotal;
+  document.getElementById("subtotal-cost").innerHTML = subTotalToShow.toFixed(2);
+
+}
 
 //EVENTOS:
 
@@ -265,27 +290,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 document.getElementById("change-currency").addEventListener("click", function (e) {
 
   isDollar = !isDollar;
-
-  if (isDollar == true) {
-    document.getElementById("change-currency").innerHTML = "UYU ";
-    document.getElementById("subtotal-currency").innerHTML = "USD ";
-    document.getElementById("total-currency").innerHTML = "USD ";
-    document.getElementById("shipping-currency").innerHTML = "USD ";
-  } else {
-    document.getElementById("change-currency").innerHTML = "USD ";
-    document.getElementById("subtotal-currency").innerHTML = "UYU ";
-    document.getElementById("total-currency").innerHTML = "UYU ";
-    document.getElementById("shipping-currency").innerHTML = "UYU ";
-  }
-
-  let shippingCostToShow = isDollar ? shippingCost / 40 : shippingCost;
-  shippingCost = Number(document.getElementById("shipping-cost").innerText)
-
-  document.getElementById("shipping-cost").innerHTML = shippingCostToShow.toFixed(2);
-
-  let subTotalToShow = isDollar ? finSubTotal / 40 : finSubTotal;
-  document.getElementById("subtotal-cost").innerHTML = subTotalToShow.toFixed(2);
-
+  
+  currencyConversion();
   showTotalCost();
 })
 
@@ -294,12 +300,14 @@ document.getElementById("change-currency").addEventListener("click", function (e
 document.getElementById("finalize-purchase").addEventListener("click", function (event) {
   let shippingAdd = document.getElementById("shipping-add").value;
   let shippingCity = document.getElementById("shipping-city-country").value;
-  
-  if (shippingAdd == "" || shippingCity == "") {
-    alert("Completa los campos restantes para finalizar tu compra.")
-  } else {
-    $('#myModal').modal({ show: true});
-    successfulPurchase(event);
 
+  if (shippingAdd == "" || shippingCity == "") {
+    alert("Completa los campos restantes para finalizar tu compra."); 
+  } else if (finSubTotal == "0") {
+    alert("Debes añadir productos para finalizar tu compra");
+    event.preventDefault(event);
+  } else {
+    $('#myModal').modal({ show: true });
+    successfulPurchase(event);
   }
 });
