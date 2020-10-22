@@ -6,7 +6,7 @@ const PRODUCT_INFO_URL = "https://japdevdep.github.io/ecommerce-api/product/5678
 const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/product/5678-comments.json";
 const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
 const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
-
+const CART_INFO_URL_2 = "https://japdevdep.github.io/ecommerce-api/cart/654.json";
 
 
 
@@ -44,29 +44,27 @@ var getJSONData = function (url) {
 }
 
 
-function logOut(){ 
+function logOut() {
   sessionStorage.removeItem("validado");
   sessionStorage.removeItem("emailDisplay");
   localStorage.removeItem("validado");
   localStorage.removeItem("emailDisplay");
 }
 
-    
+
 
 document.addEventListener("DOMContentLoaded", function (e) {
   let validadoSession = sessionStorage.getItem('validado');
   let validadoLocal = localStorage.getItem('validado')
-  
+
   if ((validadoSession !== "true") && (validadoLocal !== "true") && (!location.href.includes("login.html"))) {
 
     sessionStorage.setItem("returnURL", location.href);
     location.href = "login.html";
   } else {
-
-
     let loggedMail = localStorage.getItem('emailDisplay') || sessionStorage.getItem('emailDisplay');
     document.getElementById("dropdownMenuLink").innerHTML += loggedMail;
-
-
   }
+
+  
 });

@@ -57,8 +57,9 @@ input[type=number] {
     padding: 5px 1px 5px 5px;
     border-top: 1px ridge;
 }
-#finalize-purchase{
-    height: 80px;
+#finalize-purchase, #select-payment{
+    height: 60px;
+    width: max-content;
 }
 
 #change-currency {

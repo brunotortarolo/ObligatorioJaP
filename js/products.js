@@ -3,23 +3,34 @@
 //elementos HTML presentes.
 var productsArray = [];
 
-var prodContainer = document.createElement("div"); 
-    document.body.appendChild(prodContainer);
-    prodContainer.id="product-list-container";
-    
+var prodContainer = document.createElement("div");
+document.body.appendChild(prodContainer);
+prodContainer.id = "product-list-container";
 
-    
-    function showProductsList(array) {
-    
+/*function addToCart(i) {
+    let addedProduct = {
+        "name": productsArray[i].name,
+        "count": 1,
+        "unitCost": productsArray[i].cost,
+        "currency": productsArray[i].currency,
+        "src": productsArray[i].imgSrc
+    }
+    globalCartContent.push(addedProduct);
+    console.log(cartContent)
+}*/
+
+
+function showProductsList(array) {
+
     let htmlContentToAppend = "";
 
 
-    for (let i = 0; i < array.length; i++){
+    for (let i = 0; i < array.length; i++) {
         let product = array[i];
         let name = product.name;
-        
+
         htmlContentToAppend += `
-        <a href="product-info.html?model=`+name+`" class="list-group-item list-group-item-action">
+        <a href="product-info.html?model=`+ name + `" class="list-group-item list-group-item-action">
             <div class="list-group-item list-group-item-action">
             <div class="row">
                 <div class="col-3">
@@ -28,12 +39,14 @@ var prodContainer = document.createElement("div");
                 <div class="col">
                     <div class="d-flex w-100 justify-content-between">
                         
-                        <h4 class="mb-1">`+ product.name +`</h4>
+                        <h4 class="mb-1">`+ product.name + `</h4>
                         <small class="text-muted">` + product.soldCount + ` artículos vendidos</small>
                     </div>
                     <div>` + product.description + `</div>
                     <div>` + product.currency + product.cost + `</div>
+                    
                 </div>
+                
             </div>
         </div>
         </a>
@@ -44,43 +57,43 @@ var prodContainer = document.createElement("div");
 }
 
 
-document.addEventListener("DOMContentLoaded", function(e){
-    
-    getJSONData(PRODUCTS_URL).then(function(resultObject){
-        if (resultObject.status === "ok"){
+document.addEventListener("DOMContentLoaded", function (e) {
+
+    getJSONData(PRODUCTS_URL).then(function (resultObject) {
+        if (resultObject.status === "ok") {
             productsArray = resultObject.data;
             showProductsList(productsArray);
         }
-        });
+    });
 });
 
 //filtro de búsqueda entre rangos de precio libres
 
-document.getElementById("filter-button").addEventListener("click", function(e){
+document.getElementById("filter-button").addEventListener("click", function (e) {
     let min = document.getElementById("min-filter").value;
-    let max = document.getElementById("max-filter").value; 
-    getJSONData(PRODUCTS_URL).then(function(resultObject){
-        if (resultObject.status === "ok"){
+    let max = document.getElementById("max-filter").value;
+    getJSONData(PRODUCTS_URL).then(function (resultObject) {
+        if (resultObject.status === "ok") {
             productsArray = resultObject.data.filter(elemento => (!min || elemento.cost >= min) && (!max || elemento.cost <= max));
             showProductsList(productsArray);
         }
-        });
+    });
 });
 
 
 
 //Filtro de búsqueda opciones predefinidas
 
-document.getElementById("filter-select").addEventListener("change", function(e){
-     
-     
+document.getElementById("filter-select").addEventListener("change", function (e) {
+
+
     const select = document.getElementById("filter-select");
     const selectedID = select.options[select.selectedIndex].id;
-    
+
     let min = 0;
     let max = 0;
-    switch(selectedID){
-        case "op1": 
+    switch (selectedID) {
+        case "op1":
             min = 0;
             max = 13000;
             break;
@@ -101,32 +114,32 @@ document.getElementById("filter-select").addEventListener("change", function(e){
             max = Number.MAX_SAFE_INTEGER;
     }
 
-    getJSONData(PRODUCTS_URL).then(function(resultObject){
-        if (resultObject.status === "ok"){
+    getJSONData(PRODUCTS_URL).then(function (resultObject) {
+        if (resultObject.status === "ok") {
             productsArray = resultObject.data.filter(elemento => (elemento.cost >= min) && (elemento.cost <= max));
             showProductsList(productsArray);
         }
-        });
+    });
 });
 
 //Limpiar filtro
-function clearFilter(){
-    getJSONData(PRODUCTS_URL).then(function(resultObject){
-        if (resultObject.status === "ok"){
+function clearFilter() {
+    getJSONData(PRODUCTS_URL).then(function (resultObject) {
+        if (resultObject.status === "ok") {
             productsArray = resultObject.data;
             showProductsList(productsArray);
         }
-        });
-    }
+    });
+}
 
 //Ordenar productos
 
-function sortProductsBy(sortingProperty, order){
-    
-    
-    productsArray.sort(function(prodA,prodB){
-      
-        
+function sortProductsBy(sortingProperty, order) {
+
+
+    productsArray.sort(function (prodA, prodB) {
+
+
         return (prodA[sortingProperty] - prodB[sortingProperty]) * order;
     })
     showProductsList(productsArray);
@@ -134,7 +147,7 @@ function sortProductsBy(sortingProperty, order){
 
 //barra de búsqueda de productos
 
-document.getElementById("search-input").addEventListener("keyup", function(e){
+document.getElementById("search-input").addEventListener("keyup", function (e) {
     let searchInput = document.getElementById("search-input").value.toLowerCase();
     let searchArray = productsArray.filter(elemento => (elemento.name.toLowerCase().includes(searchInput)) || (elemento.description.toLowerCase().includes(searchInput)));
     showProductsList(searchArray);

@@ -1,7 +1,7 @@
-const CART_INFO_URL_2 = "https://japdevdep.github.io/ecommerce-api/cart/654.json";
 const userID = sessionStorage.getItem("emailDisplay") || localStorage.getItem("emailDisplay");
 let cartContent = [];
 let successMessage = {};
+
 let finSubTotal = 0;
 let shippingCost = 0;
 let isDollar = false;
@@ -23,6 +23,8 @@ function addToCounter(i) {
 
   subTotalToShow = isDollar ? finSubTotal / 40 : finSubTotal;
   document.getElementById("subtotal-cost").innerHTML = subTotalToShow.toFixed(2);
+
+  cartContent[i].count = valueCounter;
   showTotalCost();
 }
 
@@ -47,7 +49,7 @@ function takeFromCounter(i) {
 
   subTotalToShow = isDollar ? finSubTotal / 40 : finSubTotal;
   document.getElementById("subtotal-cost").innerHTML = subTotalToShow.toFixed(2);
-
+  cartContent[i].count = valueCounter;
   showTotalCost();
 }
 
@@ -55,7 +57,7 @@ function takeFromCounter(i) {
 //REMOVER ITEM
 function removeItem(i) {
   cartContent.splice(i, 1);
-  showCartContent(cartContent); 
+  showCartContent(cartContent);
   currencyConversion();
   showTotalCost();
 }
@@ -74,8 +76,8 @@ function showTotalCost() {
   }
 
   shippingCost = finSubTotal * shippingTypeValue;
-  let total = finSubTotal + shippingCost
-  let shippingCostToShow = isDollar ? shippingCost / 40 : shippingCost
+  let total = finSubTotal + shippingCost;
+  let shippingCostToShow = isDollar ? shippingCost / 40 : shippingCost;
   let totalToShow = isDollar ? total / 40 : total;
 
   document.getElementById("shipping-cost").innerHTML = shippingCostToShow.toFixed(2);
@@ -85,10 +87,9 @@ function showTotalCost() {
 
 
 //FINALIZCIÓN DE COMPRA:
-function successfulPurchase(event) {
-  event.preventDefault()
+function successfulPurchase() {
+  
 
-  console.dir(document.getElementById("finalize-purchase"))
   let modalHeader = document.getElementById("success-message");
 
   //table 1
@@ -134,8 +135,8 @@ function successfulPurchase(event) {
   let subTotalInfo = subTotalCurrency + " " + subTotal;
 
   let shippingCurrency = document.getElementById("shipping-currency").innerText;
-  let shippingCost = document.getElementById("shipping-cost").innerText;
-  let shippingCostInfo = shippingCurrency + " " + shippingCost;
+  let shippingCostMod = document.getElementById("shipping-cost").innerText;
+  let shippingCostInfo = shippingCurrency + " " + shippingCostMod;
 
   let totalCurrency = document.getElementById("total-currency").innerText;
   let totalCost = document.getElementById("total-amount").innerText;
@@ -170,6 +171,7 @@ function showCartContent(array) {
   let precioEnUYU = 0;
   let htmlContentToAppend = "";
   let subTotalFinal = 0;
+  let articles = "";
 
   for (let i = 0; i < array.length; i++) {
     let cartItem = array[i];
@@ -234,12 +236,14 @@ function showCartContent(array) {
   document.getElementById("article").innerHTML = articles;
 
   document.getElementById("subtotal-cost").innerHTML = subTotalFinal.toFixed(2);
-  finSubTotal = Number(document.getElementById("subtotal-cost").innerText); 
-  
+  finSubTotal = Number(document.getElementById("subtotal-cost").innerText);
+  showTotalCost();
+
 }
 
-function currencyConversion(){
- 
+//CONVERSION MONEDA
+function currencyConversion() {
+
   if (isDollar == true) {
     document.getElementById("change-currency").innerHTML = "UYU ";
     document.getElementById("subtotal-currency").innerHTML = "USD ";
@@ -262,23 +266,80 @@ function currencyConversion(){
 
 }
 
+//VALIDACION INPUTS PAGO
+function validatePayment(event) {
+  event.preventDefault()
+
+  let cardNum = document.getElementById("card-num").value;
+  let cardDate = document.getElementById("vto-card").value.split("/");
+  let month = Number(cardDate[0]);
+  let year = Number(cardDate[1]);
+  let now = new Date();
+  let currentYear = now.getUTCFullYear();
+
+  let cardCode = document.getElementById("cvv-card").value;
+
+  let bankNum = document.getElementById("account-n").value;
+  let bankSuc = document.getElementById("sucursal-bank").value;
+
+
+  let paymentOp = document.getElementsByName("payment-method")
+  let checkedOption = undefined;
+  for (let i = 0; i < paymentOp.length; i++) {
+    if (paymentOp[i].checked) {
+      checkedOption = paymentOp[i].id
+    }
+  }
+  switch (checkedOption) {
+    case "credit-radio":
+      if (cardNum.length < 13 || cardNum.length > 16 || isNaN(Number(cardNum))) {
+        alert("Verifica que el número de tu tarjeta tenga entre 13 y 16 caracteres numéricos.")
+
+      } else if (cardCode.length != 3 || isNaN(Number(cardCode))) {
+        alert("Corrobora que tu código de seguridad sea el correcto.")
+
+      } else if (cardDate.length != 2 || month < 1 || month > 12 || year < (currentYear - 1)) {
+        alert("Verifica que la fecha de vencimiento de tu tarjeta sea la correcta.")
+
+      } else {
+        $('#paymentModal').modal('hide');
+      }
+      break;
+
+    case "account-radio":
+      if (bankNum.length < 12 || bankNum.length > 20 || isNaN(Number(bankNum))) {
+        alert("Verifica que tu número de cuenta tenga entre 13 y 20 caracteres numéricos")
+      } else if (bankSuc.length <= 0) {
+        alert("El campo de sucursal no puede quedar vacío");
+      } else {
+        $('#paymentModal').modal('hide');
+      }
+      break;
+  }
+
+}
+
+function resetPaymentModal() {
+
+  let radioCredit = document.getElementById("credit-radio");
+  let radioBank = document.getElementById("account-radio");
+
+  radioCredit.checked = false;
+  radioBank.checked = false;
+}
+
 //EVENTOS:
 
 document.addEventListener("DOMContentLoaded", function (e) {
-
   getJSONData(CART_INFO_URL_2).then(function (resultObject) {
     if (resultObject.status === "ok") {
       cartContent = resultObject.data.articles;
-
       showCartContent(cartContent);
-
     }
   });
-
   getJSONData(CART_BUY_URL).then(function (resultObject) {
     if (resultObject.status === "ok") {
       successMessage = resultObject.data;
-
     }
   });
 
@@ -289,24 +350,79 @@ document.addEventListener("DOMContentLoaded", function (e) {
 document.getElementById("change-currency").addEventListener("click", function (e) {
 
   isDollar = !isDollar;
-  
+
   currencyConversion();
   showTotalCost();
 })
 
 
 
-document.getElementById("finalize-purchase").addEventListener("click", function (event) {
+document.getElementById("purchase-details").addEventListener("submit", function (event) {
+  event.preventDefault()
   let shippingAdd = document.getElementById("shipping-add").value;
   let shippingCity = document.getElementById("shipping-city-country").value;
+  let paymentCredit = document.getElementById("credit-radio");
+  let paymentBank = document.getElementById("account-radio");
 
-  if (shippingAdd == "" || shippingCity == "") {
-    alert("Completa los campos restantes para finalizar tu compra."); 
+
+
+  if (shippingAdd.length < 5 || shippingCity.length < 5 || !isNaN(Number(shippingAdd)) || !isNaN(Number(shippingCity))) {
+    alert("Completa los campos restantes de forma correcta para finalizar tu compra.");
+    
   } else if (finSubTotal == "0") {
     alert("Debes añadir productos para finalizar tu compra");
-    event.preventDefault(event);
+    
+  } else if (paymentCredit.checked == false && paymentBank.checked == false) {
+    alert("Debes seleccionar un método de pago para finalizar tu compra")
+    
   } else {
     $('#myModal').modal({ show: true });
-    successfulPurchase(event);
+    successfulPurchase();
   }
+  
+  return true;
 });
+
+
+document.getElementById("credit-radio").addEventListener("click", function (e) {
+  let creditInput = document.getElementsByName("credit-input");
+  let accountCard = document.getElementById("account-data");
+
+  let accountInput = document.getElementsByName("account-input");
+  let creditCard = document.getElementById("credit-data");
+
+
+  for (let i = 0; i < creditInput.length; i++) {
+    creditInput[i].removeAttribute("disabled");
+    creditInput[i].setAttribute("required", true);
+  }
+
+  for (let i = 0; i < accountInput.length; i++) {
+    accountInput[i].setAttribute("disabled", true);
+    accountInput[i].removeAttribute("required");
+  }
+
+  accountCard.style.opacity = "50%";
+  creditCard.style.opacity = "100%";
+
+})
+
+document.getElementById("account-radio").addEventListener("click", function (e) {
+  let accountInput = document.getElementsByName("account-input");
+  let creditCard = document.getElementById("credit-data");
+
+  let creditInput = document.getElementsByName("credit-input");
+  let accountCard = document.getElementById("account-data");
+
+  for (let i = 0; i < accountInput.length; i++) {
+    accountInput[i].removeAttribute("disabled");
+  }
+
+  for (let i = 0; i < creditInput.length; i++) {
+    creditInput[i].setAttribute("disabled", true);
+  }
+
+  creditCard.style.opacity = "50%";
+  accountCard.style.opacity = "100%";
+})
+

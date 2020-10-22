@@ -31,6 +31,7 @@
       }
     }
   </style>
+  <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link rel="stylesheet" href="css/cart.css">
@@ -81,8 +82,8 @@
               id="subtotal-cost"></span></h2>
           <button id="change-currency" type="button" class="btn btn-sm btn-secondary">USD</button>
         </div>
-        <form method ="#" action="#">
-          <div class="d-flex justify-content-center">
+        <form id="purchase-details" method="GET" action="">
+          <div class="d-flex justify-content-start ml-3">
             <div class="form-group">
 
               <label for="shipping-type" class="d-inline">Tipo de envío:</label>
@@ -105,44 +106,144 @@
                   <span class="badge badge-pill shipping-type text-white">Premium</span></label>
               </div>
               <div class="form-group d-flex justify-content-start my-1" style="border-bottom: 1px ridge">
-                <label for="firstname" class="">Dirección de entrega:
-                  <input id="shipping-add"type="text" class="form-control my-1" placeholder="Calle, número, esquina" required>
-                  <input id="shipping-city-country" type="text" class="form-control my-1" placeholder="Ciudad, País" required>
+                <label for="firstname">Dirección de entrega:
+                  <input id="shipping-add" type="text" class="form-control my-1" placeholder="Calle, número, esquina"
+                    required>
+                  <input id="shipping-city-country" type="text" class="form-control my-1" placeholder="Ciudad, País"
+                    required>
                 </label>
               </div>
             </div>
           </div>
-          <div class="d-flex justify-content-center">
+          <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="paymentModalLabel">Selecciona un método de pago:</h5>
+                  <button onclick="resetPaymentModal()" type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <div class="card">
+                      <div class="card-body">
+
+                        <div style="border-bottom: 1px ridge;">
+                          <label class="radio-inline"><input class="radio-inline" id="credit-radio" type="radio"
+                              name="payment-method" value="t/crédito">
+                            <span class="badge badge-pill text-white">Tarjeta de Crédito</span></label>
+                        </div>
+                        <div class="row" id="credit-data">
+                          <div class="col-2">
+                            <label for="card-num"><small>Nro.</small></label>
+                          </div>
+                          <div class="col-10">
+                            <input id="card-num" class="form-control" type="text" placeholder="**** **** **** ****"
+                              name="credit-input" disabled>
+                          </div>
+                          <div class="col-2 my-2">
+                            <label for="vto-card"><small>Vto.</small></label>
+                          </div>
+                          <div class="col-4 my-2">
+                            <input id="vto-card" class="form-control" type="text" class="" placeholder="MM/YYYY"
+                              name="credit-input" disabled>
+                          </div>
+                          <div class="col-2 my-2">
+                            <label for="cvv-card"><small>CVC/CVV</small></label>
+                          </div>
+                          <div class="col-4 my-2">
+                            <input id="cvv-card" class="form-control" type="text" placeholder="***" name="credit-input"
+                              disabled>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <!--CAMPO DE CUENTA BANCARIA-->
+                    <div class="card">
+                      <div class="card-body">
+
+                        <div style="border-bottom: 1px ridge;">
+                          <label class="radio-inline"><input id="account-radio" type="radio" name="payment-method"
+                              value="t/bancaria">
+                            <span class="badge badge-pill text-white">Transferencia Bancaria</span></label>
+                        </div>
+                        <div class="row" id="account-data">
+                          <div class="col-2 mb-2">
+                            <label><small>Banco</small></label>
+                          </div>
+                          <div class="col-10 mb-2">
+                            <select class="form-control bg-light" name="account-input" disabled>
+                              <option>BROU</option>
+                              <option>Santander</option>
+                              <option>Itaú</option>
+                              <option>Scotiabank</option>
+                              <option>BBVA</option>
+                              <option>HSBC</option>
+                            </select>
+                          </div>
+
+                          <div class="col-2 mb-2">
+                            <label for="account-n"><small>Cuenta:</small></label>
+                          </div>
+                          <div class="col-10 mb-2">
+                            <input id="account-n" class="form-control" type="text" name="account-input"
+                              placeholder="Número de cuenta" disabled>
+                          </div>
+                          <div class="col-2">
+                            <label for="sucursal-bank"><small>Sucursal:</small></label>
+                          </div>
+                          <div class="col-5">
+                            <input id="sucursal-bank" class="form-control" type="text" name="account-input"
+                              placeholder="Sucursal" disabled>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button onclick="resetPaymentModal()" type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Cancelar</button>
+                      <button onclick="validatePayment(event)" id="submit-payment" type="submit"
+                        class="btn btn-primary">Aceptar</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-start ml-3">
             <div class="form-group">
               <div class="d-flex justify-content-start" style="border-bottom: 1px ridge">
                 <h3 class="mt-0">Costo de envío: <span id="shipping-currency">UYU </span><span
                     id="shipping-cost"></span></h3>
               </div>
-
-              <div class="d-flex justify-content-start my-2" style="border-bottom: 2px ridge">
-                <div class="form-group">
-                  <label for="payment-method" class="d-flex justify-content-start">Método de pago:</label>
-                  <div>
-                    <label class="radio-inline"><input type="radio" name="payment-method" checked value="t/credito">
-                      <span class="badge badge-pill text-white">Tarjeta de Crédito</span></label>
-                    <label class="radio-inline"><input type="radio" name="payment-method" value="t/bancaria">
-                      <span class="badge badge-pill text-white">Transferencia Bancaria</span></label>
-                  </div>
-                </div>
-              </div>
               <div class="d-flex justify-content-start" style="border-bottom: 2px ridge">
                 <h2 class="my-2"><strong>Total: </strong><span id="total-currency">UYU </span><span
                     id="total-amount"></span></h2>
               </div>
+              <div class="d-flex justify-content-center my-2 py-2" style="border-bottom: 2px ridge">
+                <button id="select-payment" type="button" class="btn btn-lg btn-secondary" data-toggle="modal"
+                  data-target="#paymentModal">
+                  SELECCIONAR PAGO
+                </button>
+              </div>
               <div class="d-flex justify-content-center my-4">
-                <button id="finalize-purchase" type="submit" class="btn btn-primary col"
-                   data-target="#myModal">FINALIZAR COMPRA</button>
+                <button id="finalize-purchase" type="submit" class="btn btn-lg btn-primary col"
+                  data-target="#myModal">FINALIZAR COMPRA</button>
               </div>
             </div>
           </div>
         </form>
       </div>
     </div>
+    <!--MODAL METODO DE PAGO-->
+
+    <!--MODAL FINAL-->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -153,7 +254,7 @@
           </div>
           <div class="modal-body">
 
-            <table  class="table">
+            <table class="table">
               <thead>
                 <tr>
                   <th scope="col"></th>
