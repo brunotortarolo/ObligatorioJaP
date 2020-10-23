@@ -1,4 +1,5 @@
 const userID = sessionStorage.getItem("emailDisplay") || localStorage.getItem("emailDisplay");
+
 let cartContent = [];
 let successMessage = {};
 
@@ -27,6 +28,7 @@ function addToCounter(i) {
   cartContent[i].count = valueCounter;
   showTotalCost();
 }
+
 
 function takeFromCounter(i) {
   let subTotalToShow = 0;
@@ -63,7 +65,6 @@ function removeItem(i) {
 }
 
 
-
 //CARGAR VALORES DE SUBTOTAL, COSTO ENVIO Y TOTAL
 function showTotalCost() {
   let shippingRadios = document.getElementsByName("shipping-type");
@@ -83,7 +84,6 @@ function showTotalCost() {
   document.getElementById("shipping-cost").innerHTML = shippingCostToShow.toFixed(2);
   document.getElementById("total-amount").innerHTML = totalToShow.toFixed(2);
 }
-
 
 
 //FINALIZCIÓN DE COMPRA:
@@ -161,8 +161,6 @@ function successfulPurchase() {
   document.getElementById("modal-total").innerHTML = totalCostInfo;
 
 }
-
-
 
 
 //DISPLAY CONTENIDO DE PÁGINA
@@ -268,7 +266,7 @@ function currencyConversion() {
 
 //VALIDACION INPUTS PAGO
 function validatePayment(event) {
-  event.preventDefault()
+  event.preventDefault()  
 
   let cardNum = document.getElementById("card-num").value;
   let cardDate = document.getElementById("vto-card").value.split("/");
@@ -293,12 +291,15 @@ function validatePayment(event) {
   switch (checkedOption) {
     case "credit-radio":
       if (cardNum.length < 13 || cardNum.length > 16 || isNaN(Number(cardNum))) {
+        
         alert("Verifica que el número de tu tarjeta tenga entre 13 y 16 caracteres numéricos.")
 
       } else if (cardCode.length != 3 || isNaN(Number(cardCode))) {
+        
         alert("Corrobora que tu código de seguridad sea el correcto.")
 
       } else if (cardDate.length != 2 || month < 1 || month > 12 || year < (currentYear - 1)) {
+        
         alert("Verifica que la fecha de vencimiento de tu tarjeta sea la correcta.")
 
       } else {
@@ -308,8 +309,10 @@ function validatePayment(event) {
 
     case "account-radio":
       if (bankNum.length < 12 || bankNum.length > 20 || isNaN(Number(bankNum))) {
+        
         alert("Verifica que tu número de cuenta tenga entre 13 y 20 caracteres numéricos")
       } else if (bankSuc.length <= 0) {
+        
         alert("El campo de sucursal no puede quedar vacío");
       } else {
         $('#paymentModal').modal('hide');
@@ -328,6 +331,10 @@ function resetPaymentModal() {
   radioBank.checked = false;
 }
 
+
+function form_submit() {
+  document.getElementById("purchase-details").submit();
+ } 
 //EVENTOS:
 
 document.addEventListener("DOMContentLoaded", function (e) {
@@ -357,7 +364,7 @@ document.getElementById("change-currency").addEventListener("click", function (e
 
 
 
-document.getElementById("purchase-details").addEventListener("submit", function (event) {
+document.getElementById("finalize-purchase").addEventListener("click", function (event) {
   event.preventDefault()
   let shippingAdd = document.getElementById("shipping-add").value;
   let shippingCity = document.getElementById("shipping-city-country").value;
@@ -367,12 +374,15 @@ document.getElementById("purchase-details").addEventListener("submit", function 
 
 
   if (shippingAdd.length < 5 || shippingCity.length < 5 || !isNaN(Number(shippingAdd)) || !isNaN(Number(shippingCity))) {
+    
     alert("Completa los campos restantes de forma correcta para finalizar tu compra.");
     
   } else if (finSubTotal == "0") {
+    
     alert("Debes añadir productos para finalizar tu compra");
     
   } else if (paymentCredit.checked == false && paymentBank.checked == false) {
+    
     alert("Debes seleccionar un método de pago para finalizar tu compra")
     
   } else {
@@ -380,9 +390,8 @@ document.getElementById("purchase-details").addEventListener("submit", function 
     successfulPurchase();
   }
   
-  return true;
+  
 });
-
 
 document.getElementById("credit-radio").addEventListener("click", function (e) {
   let creditInput = document.getElementsByName("credit-input");

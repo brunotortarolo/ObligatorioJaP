@@ -20,6 +20,8 @@ Cambios realizados para entregable 6 del obligatorio:
 
 		Validación de datos de t.crédito y t.bancaria a través de js
 
+	Sumisión de form tras cerrar modal de compra exitosa.
+
 	
 	
 

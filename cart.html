@@ -107,9 +107,9 @@
               </div>
               <div class="form-group d-flex justify-content-start my-1" style="border-bottom: 1px ridge">
                 <label for="firstname">Dirección de entrega:
-                  <input id="shipping-add" type="text" class="form-control my-1" placeholder="Calle, número, esquina"
+                  <input id="shipping-add" type="text" name="address-input"class="form-control my-1" placeholder="Calle, número, esquina"
                     required>
-                  <input id="shipping-city-country" type="text" class="form-control my-1" placeholder="Ciudad, País"
+                  <input id="shipping-city-country" name="city-input" type="text" class="form-control my-1" placeholder="Ciudad, País"
                     required>
                 </label>
               </div>
@@ -142,20 +142,20 @@
                           </div>
                           <div class="col-10">
                             <input id="card-num" class="form-control" type="text" placeholder="**** **** **** ****"
-                              name="credit-input" disabled>
+                              name="credit-number" disabled>
                           </div>
                           <div class="col-2 my-2">
                             <label for="vto-card"><small>Vto.</small></label>
                           </div>
                           <div class="col-4 my-2">
                             <input id="vto-card" class="form-control" type="text" class="" placeholder="MM/YYYY"
-                              name="credit-input" disabled>
+                              name="expiration-date" disabled>
                           </div>
                           <div class="col-2 my-2">
                             <label for="cvv-card"><small>CVC/CVV</small></label>
                           </div>
                           <div class="col-4 my-2">
-                            <input id="cvv-card" class="form-control" type="text" placeholder="***" name="credit-input"
+                            <input id="cvv-card" class="form-control" type="text" placeholder="***" name="security-code"
                               disabled>
                           </div>
                         </div>
@@ -176,7 +176,7 @@
                             <label><small>Banco</small></label>
                           </div>
                           <div class="col-10 mb-2">
-                            <select class="form-control bg-light" name="account-input" disabled>
+                            <select class="form-control bg-light" name="bank" disabled>
                               <option>BROU</option>
                               <option>Santander</option>
                               <option>Itaú</option>
@@ -190,14 +190,14 @@
                             <label for="account-n"><small>Cuenta:</small></label>
                           </div>
                           <div class="col-10 mb-2">
-                            <input id="account-n" class="form-control" type="text" name="account-input"
+                            <input id="account-n" class="form-control" type="text" name="account-number"
                               placeholder="Número de cuenta" disabled>
                           </div>
                           <div class="col-2">
                             <label for="sucursal-bank"><small>Sucursal:</small></label>
                           </div>
                           <div class="col-5">
-                            <input id="sucursal-bank" class="form-control" type="text" name="account-input"
+                            <input id="sucursal-bank" class="form-control" type="text" name="sucursal-number"
                               placeholder="Sucursal" disabled>
                           </div>
                         </div>
@@ -207,7 +207,7 @@
                     <div class="modal-footer">
                       <button onclick="resetPaymentModal()" type="button" class="btn btn-secondary"
                         data-dismiss="modal">Cancelar</button>
-                      <button onclick="validatePayment(event)" id="submit-payment" type="submit"
+                      <button onclick="validatePayment(event)" id="submit-payment"
                         class="btn btn-primary">Aceptar</button>
                     </div>
 
@@ -306,7 +306,7 @@
             </table>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal" href="index.html">Cerrar</button>
+              <button type="button" onclick="form_submit()"class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>
