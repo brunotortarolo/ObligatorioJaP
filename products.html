@@ -37,12 +37,12 @@
       </div>
     </div>
   </nav>
-  <div class="text-center p-4">
-    <h2 id="products-title">Productos</h2>
-    <p class="lead">Verás aquí todos los productos disponibles en el sitio.</p>
-  </div>
-  <div id="content-functions">
-    <div id="button-container" class="row justify-content-end">
+  <main role="main" class="pb-5">
+    <div class="text-center p-4">
+      <h2>Productos</h2>
+      <p class="lead">Verás aquí todos los productos disponibles en el sitio.</p>
+    </div>
+    <div class="container">
       <div class="row">
         <div id="order-buttons" class="col text-right">
           <div class="btn-group btn-group-toggle mb-4" data-toggle="buttons">
@@ -61,33 +61,37 @@
           </div>
         </div>
       </div>
-    </div>
+      <div class="row justify-content-end">
+        <div id="filter-container" class="row justify-content-end">
+          <p id="precio" class="font-weight-normal text-right my-2">Precio:</p>
 
-    <div id="filter-container" class="row justify-content-end">
-      <p id="precio" class="font-weight-normal text-right my-2">Precio:</p>
+          <div class="btn-group" role="group">
+            <input id="min-filter" class="form-control" type="text" placeholder="min.">
 
-      <div class="btn-group" role="group">
-        <input id="min-filter" class="form-control" type="text" placeholder="min.">
+            <input id="max-filter" class="form-control" type="text" placeholder="máx.">
 
-        <input id="max-filter" class="form-control" type="text" placeholder="máx.">
+            <select id="filter-select" class="btn btn-light btn-block" style="background-color: #ffffff">
+              <option id="precio" selected disabled>Precio</option>
+              <option id="op1">0 - U$S13.000</option>
+              <option id="op2">U$S13.000 - U$S14.500</option>
+              <option id="op3">U$S14.500 - U$S15.000</option>
+              <option id="op4">Más de U$S15.000</option>
+            </select>
+          </div>
 
-        <select id="filter-select" class="btn btn-light btn-block" style="background-color: #ffffff">
-          <option id="precio" selected disabled>Precio</option>
-          <option id="op1">0 - U$S13.000</option>
-          <option id="op2">U$S13.000 - U$S14.500</option>
-          <option id="op3">U$S14.500 - U$S15.000</option>
-          <option id="op4">Más de U$S15.000</option>
-        </select>
+          <div class="btn-group" role="group">
+            <button class="btn btn-light btn-block" id="filter-button" type="input" value="FILTRAR">Filtrar</button>
+            <button class="btn btn-link btn-sm" id="clear-filter" type="input" value="LIMPIAR"
+              onclick="clearFilter()">Limpiar</button>
+          </div>
+        </div>
       </div>
 
-      <div class="btn-group" role="group">
-        <button class="btn btn-light btn-block" id="filter-button" type="input" value="FILTRAR">Filtrar</button>
-        <button class="btn btn-link btn-sm" id="clear-filter" type="input" value="LIMPIAR"
-          onclick="clearFilter()">Limpiar</button>
+      <div id="product-list-container" class="row mt-3">
       </div>
-    </div>
 
-  </div>
+    </div>
+  </main>
 
 
   <div id="spinner-wrapper">

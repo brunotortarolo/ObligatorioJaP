@@ -394,10 +394,10 @@ document.getElementById("finalize-purchase").addEventListener("click", function 
 });
 
 document.getElementById("credit-radio").addEventListener("click", function (e) {
-  let creditInput = document.getElementsByName("credit-input");
+  let creditInput = document.getElementsByClassName("credit-input");
   let accountCard = document.getElementById("account-data");
 
-  let accountInput = document.getElementsByName("account-input");
+  let accountInput = document.getElementsByClassName("account-input");
   let creditCard = document.getElementById("credit-data");
 
 
@@ -417,10 +417,10 @@ document.getElementById("credit-radio").addEventListener("click", function (e) {
 })
 
 document.getElementById("account-radio").addEventListener("click", function (e) {
-  let accountInput = document.getElementsByName("account-input");
+  let accountInput = document.getElementsByClassName("account-input");
   let creditCard = document.getElementById("credit-data");
 
-  let creditInput = document.getElementsByName("credit-input");
+  let creditInput = document.getElementsByClassName("credit-input");
   let accountCard = document.getElementById("account-data");
 
   for (let i = 0; i < accountInput.length; i++) {

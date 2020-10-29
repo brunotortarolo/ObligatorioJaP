@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+.header {
+  min-height: 60vh;
+  background:#d61c6c;
+background: linear-gradient(to right,#d61c6c ,#d4377bcb);
+  color: white;
+  clip-path: ellipse(100vw 60vh at 50% 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details {
+  text-align: center;
+}
+
+.profile-pic {
+  height: 6rem;
+  width: 6rem;
+  object-fit: auto;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.location p {
+  display: inline-block;
+}
+
+.datos {
+  display: flex;
+}
+
+.datos .col-4 {
+  width: 10rem;
+  text-align: center;
+}
+
+.heading {
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin: 1rem 0;
+}
+
+.pic-edit{
+  cursor: pointer;
+}
+
+#edit-data, #save-profile-data {
+  background-color: #d4498698; 
+  border: 1px solid
+}
+#edit-data:hover{
+  background-color: #d61c6c ;
+}
+
+#save-profile-data:hover{
+  background-color: #d61c6c ;
+}
+
+#cancel-data{
+  background-color: #d61c6c;
+  border: 1px solid
+}
+
+#cancel-data:hover{
+  background-color: #d4498698
+}
+
+#edit-picture{
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  width: 15rem;
+}
+#edit-picture::placeholder{
+  color: white;
+  opacity: 0.5;
+}

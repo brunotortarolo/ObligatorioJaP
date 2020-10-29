@@ -3,21 +3,9 @@
 //elementos HTML presentes.
 var productsArray = [];
 
-var prodContainer = document.createElement("div");
+/*var prodContainer = document.createElement("div");
 document.body.appendChild(prodContainer);
-prodContainer.id = "product-list-container";
-
-/*function addToCart(i) {
-    let addedProduct = {
-        "name": productsArray[i].name,
-        "count": 1,
-        "unitCost": productsArray[i].cost,
-        "currency": productsArray[i].currency,
-        "src": productsArray[i].imgSrc
-    }
-    globalCartContent.push(addedProduct);
-    console.log(cartContent)
-}*/
+prodContainer.id = "product-list-container";*/
 
 
 function showProductsList(array) {
@@ -27,29 +15,19 @@ function showProductsList(array) {
 
     for (let i = 0; i < array.length; i++) {
         let product = array[i];
-        let name = product.name;
-
+        
         htmlContentToAppend += `
-        <a href="product-info.html?model=`+ name + `" class="list-group-item list-group-item-action">
-            <div class="list-group-item list-group-item-action">
-            <div class="row">
-                <div class="col-3">
-                    <img src="` + product.imgSrc + `" alt="` + product.name + `" class="img-thumbnail">
-                </div>
-                <div class="col">
-                    <div class="d-flex w-100 justify-content-between">
-                        
-                        <h4 class="mb-1">`+ product.name + `</h4>
-                        <small class="text-muted">` + product.soldCount + ` artículos vendidos</small>
-                    </div>
-                    <div>` + product.description + `</div>
-                    <div>` + product.currency + product.cost + `</div>
-                    
-                </div>
-                
-            </div>
+        <div class="col-md-4">
+            <a href="product-info.html?model=${product.name}" class="card mb-4 shadow-sm custom-card">
+               <img src="${product.imgSrc}" alt="${product.name}" class="bd-placeholder-img card-img-top">                                
+               <h3 class="m-3">${product.name}</h3>
+               <div class="card-body bg-dark text-light">
+                    <div>${product.currency} ${product.cost}</div>
+                    <p><small class="card-text text-muted">${product.soldCount} artículos vendidos</small></p>
+                    <p class="card-text">${product.description}</p>
+                </div>                           
+            </a>
         </div>
-        </a>
         `
     }
 
