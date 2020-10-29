@@ -1,26 +1,44 @@
-Cambios realizados para entregable 6 del obligatorio:
-
-
+Cambios realizados para entregable 7 del obligatorio:	
 	
-	
-	Modal de forma de pago:
+	PAGINA DE PERFIL DE USUARIO:
+		Datos:
+			foto,
+			nombre,
+			ubicación,
+			edad,
+			email,
+			contacto(teléfono)
 
-		Opciones para tarjeta de crédito o transferencia bancaria.
+		Sin datos agregados y guardados, los campos se muestran vacíos.
 
-	Radios para costo de envío: 
+		Opción editar campos:
+			Despliega form para completar datos.
+			Campos obligatorios (nombre, primer apellido, email)
+			Validación de ubicación (si se llena uno de los campos de ubicación, deberá llenarse el complementario)
+		
+		Actualización de datos:
+			Datos se guardan como propiedades de un objeto en el local storage, bajo un key dinámico que se genera a partir
+			del usuario ingresado en login.
 
-		Modificación en tiempo real de costo de envío en función de subtotal, y resultado de total.
+				De esta manera podrán existir varios objetos en memoria y serán asociados a cada usuario conforme ingresen al sitio.
+
+			Los valores existentes se mostrarán como placeholder en sus respectivos campos si volvemos a ingresar al formulario de edición
+
 		
 		
-	Validación de inputs para finalización de compras:
+		
+	GRID Y RESPONSIVNESS:
 
-		Impide compras con 0 artículos o 0 items
-		Impide campos de dirección y ciudad vacíos
-		Impide finalizar compra sin seleccionar método de pago y completar información pertiente al mismo
+		Implementación de layout de PRODUCTS.HTML y CATEGORIES.HTML utilizando grid de bootstrap.
+		Implementación de responsiveness.
 
-		Validación de datos de t.crédito y t.bancaria a través de js
 
-	Sumisión de form tras cerrar modal de compra exitosa.
+
+	ALMACENAMIENTO DE IMG EN LOCAL STORAGE:
+
+	****PENDIENTE****
+
+
 
 	
 	

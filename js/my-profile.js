@@ -63,7 +63,7 @@ function editProfileContent() {
   <form method="#" action="#">
   <header class="header">
     <div class="details">
-      <div>
+      <div class="mt-3">
         <label for="edit-picture" class="col-form-label pic-edit">
           <img src=${userInfo.picture || "img/user.png"} alt="profile-picture" class="profile-pic">
           <input type="text" id="edit-picture" class="form-control mt-2 text-white" placeholder="Pega la URL de tu imagen">  
@@ -135,7 +135,7 @@ function editProfileContent() {
 
       </div>
 
-      <div class="location row justify-content-between mt-4">
+      <div class="location row justify-content-between my-4">
         <div class="col-4">
           <button onclick="updateData(event)"type="submit" class="btn btn-lg text-white" id="save-profile-data">ACTUALIZAR</button>
         </div>
