@@ -9,7 +9,7 @@ let userInfo = {
   edad: "",
   email: "",
   contacto: "",
-  picture: ""
+  picture: "img/user.png"
 };
 
 //MOSTRAR DATOS DE PERFIL
@@ -22,7 +22,7 @@ function showProfileContent() {
   let profileToAppend = `
     <header class="header">
         <div class="details">
-          <img src=${userInfo.picture || "img/user.png"} alt="profile-picture" class="profile-pic">
+          <img id="profile-img" src=${userInfo.picture} alt="profile-picture" class="profile-pic"> 
           <p>Usuario</p>
           <h2 id="user-name" class="heading" style="border-bottom: ridge 1px">${userInfo.nombre} ${userInfo.apellido1} ${userInfo.apellido2}</h2>
           <div class="location" style="border-bottom: ridge 1px">
@@ -50,12 +50,13 @@ function showProfileContent() {
     </header>
     `
   profileContainer.innerHTML = profileToAppend;
+
 }
 
 //EDITABLE DATOS DE PERFIL
 function editProfileContent() {
 
-  !localStorage.getItem(userEmail) ? userInfo = userInfo : userInfo = JSON.parse(localStorage.getItem(userEmail));
+  !localStorage.getItem(userEmail) ? userInfo : userInfo = JSON.parse(localStorage.getItem(userEmail));
 
   let formContainer = document.getElementById("info-profile")
 
@@ -65,9 +66,9 @@ function editProfileContent() {
     <div class="details">
       <div class="mt-3">
         <label for="edit-picture" class="col-form-label pic-edit">
-          <img src=${userInfo.picture || "img/user.png"} alt="profile-picture" class="profile-pic">
-          <input type="text" id="edit-picture" class="form-control mt-2 text-white" placeholder="Pega la URL de tu imagen">  
-          <small class="d-block mt-1">Cambiar foto</small>   
+          <img id="profile-img" src=${userInfo.picture} alt="profile-picture" class="profile-pic">
+          <input onchange="profilePic(this)" type="file" id="edit-picture" class="form-control mt-2 text-white d-none" placeholder="Exlorar">  
+          <small class="d-block mt-1">Haz click en la imagen para seleccionar una nueva foto de perfil</small>   
         </label>
       </div>
 
@@ -151,6 +152,36 @@ function editProfileContent() {
   formContainer.innerHTML = formToAppend;
 }
 
+function profilePic(input) {
+  let pictureImg = document.getElementById("profile-img");
+
+  if (input.files && input.files[0]) {
+    let reader = new FileReader();
+
+    reader.onload = function (e) {
+      pictureImg.src = e.target.result;
+      getImageBase64()
+
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function getImageBase64() {
+  let pictureImg = document.getElementById("profile-img");
+  let pictureCanvas = document.createElement("canvas");
+  let pictureContext = pictureCanvas.getContext("2d");
+
+  pictureCanvas.width = pictureImg.width;
+  pictureCanvas.height = pictureImg.height
+
+
+  pictureContext.drawImage(pictureImg, 0, 0, pictureImg.width, pictureImg.height);
+
+  let pictureAsDataURL = pictureCanvas.toDataURL("image/png");
+  return pictureAsDataURL;
+}
 //ACTUALIZAR DATOS DE USUARIO
 function updateData(event) {
 
@@ -164,7 +195,7 @@ function updateData(event) {
   let edad = document.getElementById('edit-age').value;
   let email = document.getElementById('edit-email').value;
   let contacto = document.getElementById('edit-contact').value;
-  let picture = document.getElementById("edit-picture").value;
+  let picture = document.getElementById("profile-img").src;
 
   userInfo.nombre = nombre;
   userInfo.apellido1 = apellido1;
@@ -175,26 +206,11 @@ function updateData(event) {
   userInfo.email = email;
   userInfo.contacto = contacto;
   userInfo.picture = picture;
-  
-  
-  /*PASAR FOTO DE LINK A BASE64, GUARDAR EN LOCAL Y CARGAR DESDE LOCAL
 
-  let pictureCanvas = document.createElement("canvas");
-      pictureContext = pictureCanvas.getContext("2d");
-
-      pictureCanvas.width = picture.width;
-      pictureCanvas.height = picture.height;
-
-      pictureContext.drawImage(picture, 0, 0, picture.width, picture.height);
-
-  let pictureAsDataURL = pictureCanvas.toDataURL("image/png");
-
-      userInfo.picture = pictureAsDataURL;*/
-      
-
-  let valWarning = 'Debes completar los campos de "Nombre", "Apellido 1" y "Email" para actualizar los datos.'
-  let validateLoc = 'Debes completar ambos campos de "Ubicación" para agregar tus datos.'
-
+  let valWarning = 'Debes completar los campos de "Nombre", "Apellido 1" y "Email" para actualizar los datos.';
+  let validateLoc = 'Debes completar ambos campos de "Ubicación" para agregar tus datos.';
+  let validateContacto = '"Contacto" debe ser un número.';
+  let validateEdad = '"Edad" debe ser un número.'
 
   if (nombre == "" || apellido1 == "" || email == "") {
     alert(valWarning);
@@ -202,6 +218,10 @@ function updateData(event) {
     alert(validateLoc);
   } else if (pais == "" && ciudad != "") {
     alert(validateLoc);
+  } else if (contacto != "" && isNaN(Number(contacto))) {
+    alert(validateContacto);
+  } else if (edad != "" && isNaN(Number(edad))) {
+    alert(validateEdad);
   } else {
     localStorage.setItem(userEmail, JSON.stringify(userInfo));
     showProfileContent();

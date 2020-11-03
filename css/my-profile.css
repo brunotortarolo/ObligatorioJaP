@@ -21,8 +21,12 @@ background: linear-gradient(to right,#d61c6c ,#d4377bcb);
 }
 
 .profile-pic {
-  height: 6rem;
-  width: 6rem;
+  max-height: 6rem;
+  max-width: 6rem;
+  min-width: 6rem;
+  min-height: 6rem;
+  height: auto;
+  width: auto;
   object-fit: auto;
   border-radius: 50%;
   border: 2px solid #fff;
