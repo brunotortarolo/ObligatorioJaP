@@ -207,13 +207,17 @@ function updateData(event) {
   userInfo.contacto = contacto;
   userInfo.picture = picture;
 
-  let valWarning = 'Debes completar los campos de "Nombre", "Apellido 1" y "Email" para actualizar los datos.';
+  let valWarning = 'Debes completar los campos de "Nombre", "Apellido 1" e "Email"  de forma correcta para actualizar los datos.';
   let validateLoc = 'Debes completar ambos campos de "Ubicación" para agregar tus datos.';
   let validateContacto = '"Contacto" debe ser un número.';
   let validateEdad = '"Edad" debe ser un número.'
 
-  if (nombre == "" || apellido1 == "" || email == "") {
+  if (nombre == "" || !isNaN(Number(nombre))) {
     alert(valWarning);
+  } else if (apellido1 == "" || !isNaN(Number(apellido1))) {
+    alert(valWarning);
+  } else if (!email.includes("@")) {
+    alert(valWarning)
   } else if (pais != "" && ciudad == "") {
     alert(validateLoc);
   } else if (pais == "" && ciudad != "") {
